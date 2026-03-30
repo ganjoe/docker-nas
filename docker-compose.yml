@@ -1,13 +1,13 @@
 services:
   mergerfs:
-    image: "cr.hotio.dev/hotio/mergerfs"
+    image: "hotio/mergerfs:latest"
     container_name: "mergerfs"
     privileged: true
     devices:
       - "/dev/fuse:/dev/fuse"
     volumes:
       - "/media/daniel/K7G9K5ZL:/mnt/disk1:shared"
-      - "/media/daniel/V6J9VPHS:/mnt/disk2:shared"
+      - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS"
       - "/mnt/storage:/mnt/storage:shared"
     environment:
       - "PUID=1000"
@@ -19,7 +19,7 @@ services:
     restart: "always"
 
   snapraid:
-    image: "lscr.io/linuxserver/snapraid:latest"
+    image: "linuxserver/snapraid:latest"
     container_name: "snapraid"
     volumes:
       - "/home/daniel/docker-nas/snapraid/snapraid.conf:/config/snapraid.conf"
