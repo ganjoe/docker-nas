@@ -1,6 +1,6 @@
 services:
   mergerfs:
-    image: "hotio/mergerfs"
+    image: "docker.io/hotio/mergerfs:latest"
     container_name: "mergerfs"
     privileged: true
     devices:
@@ -19,7 +19,7 @@ services:
     restart: "always"
 
   snapraid:
-    image: "linuxserver/snapraid"
+    image: "docker.io/linuxserver/snapraid:latest"
     container_name: "snapraid"
     volumes:
       - "/home/daniel/docker-nas/snapraid/snapraid.conf:/config/snapraid.conf"
@@ -33,7 +33,7 @@ services:
     restart: "unless-stopped"
 
   filebrowser:
-    image: "filebrowser/filebrowser"
+    image: "docker.io/filebrowser/filebrowser:latest"
     container_name: "cloud_filebrowser"
     user: "1000:1000"
     ports:
