@@ -17,11 +17,11 @@ services:
       - "MFS_OPTIONS=defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
     restart: "always"
 
-  snapraid:
-    image: "lscr.io/linuxserver/snapraid:latest"
+snapraid:
+    build: "."
     container_name: "snapraid"
     volumes:
-      - "/home/daniel/docker-nas/snapraid/snapraid.conf:/config/snapraid.conf"
+      - "/home/daniel/docker-nas/snapraid/snapraid.conf:/etc/snapraid.conf"
       - "/media/daniel/K7G9K5ZL:/media/daniel/K7G9K5ZL"
       - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS"
       - "/media/daniel/ZC1DPCTH:/media/daniel/ZC1DPCTH"
