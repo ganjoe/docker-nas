@@ -7,14 +7,14 @@ services:
       - "/dev/fuse:/dev/fuse"
     volumes:
       - "/media/daniel/K7G9K5ZL:/mnt/disk1:shared"
-      - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS"
+      - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS:shared"
       - "/mnt/storage:/mnt/storage:shared"
     environment:
       - "PUID=1000"
       - "PGID=1000"
       - "UMASK=022"
-      - "MFS_SRC=/mnt/disk1:/mnt/disk2"
-      - "MFS_DEST=/mnt/storage"
+      - "MFS_BRANCHES=/mnt/disk1:/mnt/disk2"
+      - "MFS_MOUNTPOINT=/mnt/storage"
       - "MFS_OPTIONS=defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
     restart: "always"
 
