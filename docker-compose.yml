@@ -1,25 +1,24 @@
 services:
   mergerfs:
-    image: "docker.io/hotio/mergerfs:latest"
+    image: "ghcr.io/trapexit/mergerfs:latest"
     container_name: "mergerfs"
     privileged: true
     devices:
       - "/dev/fuse:/dev/fuse"
     volumes:
       - "/media/daniel/K7G9K5ZL:/mnt/disk1:shared"
-      - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS"
+      - "/media/daniel/V6J9VPHS:/mnt/disk2:shared"
       - "/mnt/storage:/mnt/storage:shared"
     environment:
       - "PUID=1000"
       - "PGID=1000"
-      - "TZ=Europe/Berlin"
       - "MFS_SRC=/mnt/disk1:/mnt/disk2"
       - "MFS_DEST=/mnt/storage"
       - "MFS_OPTIONS=defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
     restart: "always"
 
   snapraid:
-    image: "docker.io/linuxserver/snapraid:latest"
+    image: "lscr.io/linuxserver/snapraid:latest"
     container_name: "snapraid"
     volumes:
       - "/home/daniel/docker-nas/snapraid/snapraid.conf:/config/snapraid.conf"
@@ -33,7 +32,7 @@ services:
     restart: "unless-stopped"
 
   filebrowser:
-    image: "docker.io/filebrowser/filebrowser:latest"
+    image: "filebrowser/filebrowser:latest"
     container_name: "cloud_filebrowser"
     user: "1000:1000"
     ports:
