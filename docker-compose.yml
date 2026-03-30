@@ -1,0 +1,44 @@
+services:
+  # MergerFS: Verbindet deine beiden Datenplatten zu einem Pool
+  mergerfs:
+    image: "ghcr.io/trapexit/mergerfs:latest"
+    container_name: "mergerfs"
+    privileged: true
+    devices:
+      - "/dev/fuse:/dev/fuse"
+    volumes:
+      - "/media/daniel/K7G9K5ZL:/mnt/disk1:shared"
+      - "/media/daniel/V6J9VPHS:/mnt/disk2:shared"
+      - "/mnt/storage:/mnt/storage:shared"
+    environment:
+      - "OPTIONS=:defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
+      - "SRC=/mnt/disk1:/mnt/disk2"
+      - "DEST=/mnt/storage"
+    restart: "always"
+
+  # SnapRAID: Sichert die Daten auf die Paritätsplatte sdd2
+  snapraid:
+    image: "linuxserver/snapraid:latest"
+    container_name: "snapraid"
+    volumes:
+      - "./snapraid/snapraid.conf:/config/snapraid.conf"
+      - "/media/daniel/K7G9K5ZL:/media/daniel/K7G9K5ZL"
+      - "/media/daniel/V6J9VPHS:/media/daniel/V6J9VPHS"
+      - "/media/daniel/ZC1DPCTH:/media/daniel/ZC1DPCTH"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Berlin"
+    restart: "unless-stopped"
+
+  # Cloud: Webbasierter Zugriff auf den mergerfs-Pool
+  filebrowser:
+    image: "filebrowser/filebrowser:latest"
+    container_name: "cloud_filebrowser"
+    user: "1000:1000"
+    ports:
+      - "8081:80"
+    volumes:
+      - "/mnt/storage:/srv"
+      - "./filebrowser.db:/database.db"
+    restart: "always"
