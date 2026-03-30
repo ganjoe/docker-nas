@@ -33,7 +33,7 @@ services:
     restart: "unless-stopped"
 
   filebrowser:
-    image: "ghcr.io/filebrowser/filebrowser:latest"
+    image: "filebrowser/filebrowser:latest"
     container_name: "cloud_filebrowser"
     user: "1000:1000"
     ports:
