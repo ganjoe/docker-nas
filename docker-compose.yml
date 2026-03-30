@@ -1,7 +1,5 @@
-services:
-  # MergerFS: Verbindet deine beiden Datenplatten zu einem Pool
-  mergerfs:
-    image: "ghcr.io/trapexit/mergerfs:latest"
+mergerfs:
+    image: "cr.hotio.dev/hotio/mergerfs"
     container_name: "mergerfs"
     privileged: true
     devices:
@@ -11,9 +9,11 @@ services:
       - "/media/daniel/V6J9VPHS:/mnt/disk2:shared"
       - "/mnt/storage:/mnt/storage:shared"
     environment:
-      - "OPTIONS=:defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
-      - "SRC=/mnt/disk1:/mnt/disk2"
-      - "DEST=/mnt/storage"
+      - "PUID=1000"
+      - "PGID=1000"
+      - "MFS_SRC=/mnt/disk1:/mnt/disk2"
+      - "MFS_DEST=/mnt/storage"
+      - "MFS_OPTIONS=defaults,allow_other,cache.files=off,use_ino,dropcacheonclose=true,category.create=mfs,minfreespace=20G"
     restart: "always"
 
   # SnapRAID: Sichert die Daten auf die Paritätsplatte sdd2
